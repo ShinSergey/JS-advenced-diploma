@@ -24,6 +24,7 @@
  * */
 export function calcTileType(index, boardSize) {
   // TODO: ваш код будет тут
+  // const field = [top-left]
   return 'center';
 }
 
