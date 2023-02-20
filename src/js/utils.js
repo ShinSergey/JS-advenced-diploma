@@ -24,7 +24,25 @@
  * */
 export function calcTileType(index, boardSize) {
   // TODO: ваш код будет тут
-  // const field = [top-left]
+  const fieldSize = boardSize * boardSize;
+
+  if (index === boardSize - boardSize) {
+    return 'top-left';
+  } if (index === boardSize - 1) {
+    return 'top-right';
+  } if (index > boardSize - boardSize && index < boardSize - 1) {
+    return 'top';
+  } if (index === fieldSize - boardSize) {
+    return 'bottom-left';
+  } if (index === fieldSize - 1) {
+    return 'bottom-right';
+  } if (index > fieldSize - boardSize && index < fieldSize - 1) {
+    return 'bottom';
+  } if (Number.isInteger((index + 1) / boardSize)) {
+    return 'right';
+  } if (Number.isInteger(index / boardSize)) {
+    return 'left';
+  }
   return 'center';
 }
 

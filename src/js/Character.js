@@ -13,12 +13,20 @@
  * vampire
  */
 export default class Character {
-  constructor(level, type = 'generic') {
+  constructor(level, type) {
+    const types = ['Bowman', 'Swordsman', 'Magician', 'Daemon', 'Undead', 'Vampire'];
+    if (!types.includes(type)) {
+      throw new Error('Класс не найден');
+    }
+    if (level < 1 || level > 4) {
+      throw new Error('Недопустимый уровень');
+    }
     this.level = level;
     this.attack = 0;
     this.defence = 0;
     this.health = 50;
     this.type = type;
     // TODO: выбросите исключение, если кто-то использует "new Character()"
+    if (new.target.name === Character) throw new Error("Нельзя создать класс Character");
   }
 }
