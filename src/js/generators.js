@@ -1,6 +1,7 @@
 import Bowman from "./Characters/Bowman";
 import Swordsman from "./Characters/Swordsman";
 import Magician from "./Characters/Magician";
+import Team from "./Team";
 
 /**
  * Формирует экземпляр персонажа из массива allowedTypes со
@@ -14,9 +15,11 @@ import Magician from "./Characters/Magician";
  */
 export function* characterGenerator(allowedTypes, maxLevel) {
   // TODO: write logic here
-  const randomType = allowedTypes[Math.floor(Math.random() * allowedTypes.length)];
-  const randomLevel = Math.floor(Math.random() * maxLevel) + 1;
-  yield new randomType(randomLevel);
+  while (true) {
+    const randomType = allowedTypes[Math.floor(Math.random() * allowedTypes.length)];
+    const randomLevel = Math.floor(Math.random() * maxLevel) + 1;
+    yield new randomType(randomLevel);
+  }
 }
 
 /**

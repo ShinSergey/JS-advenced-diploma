@@ -14,7 +14,7 @@
  */
 export default class Character {
   constructor(level, type) {
-    const types = ['Bowman', 'Swordsman', 'Magician', 'Daemon', 'Undead', 'Vampire'];
+    const types = ['bowman', 'swordsman', 'magician', 'daemon', 'undead', 'vampire'];
     if (!types.includes(type)) {
       throw new Error('Класс не найден');
     }
