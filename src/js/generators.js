@@ -1,7 +1,4 @@
-import Bowman from "./Characters/Bowman";
-import Swordsman from "./Characters/Swordsman";
-import Magician from "./Characters/Magician";
-import Team from "./Team";
+import Team from './Team';
 
 /**
  * Формирует экземпляр персонажа из массива allowedTypes со
@@ -31,11 +28,11 @@ export function* characterGenerator(allowedTypes, maxLevel) {
  * */
 export function generateTeam(allowedTypes, maxLevel, characterCount) {
   // TODO: write logic here
-  let generator = characterGenerator(allowedTypes, maxLevel)
-  let characters = [];
+  const generator = characterGenerator(allowedTypes, maxLevel);
+  const characters = [];
   while (characters.length <= characterCount - 1) {
-    let char = generator.next(allowedTypes, maxLevel)
-    characters.push(char)
+    const char = generator.next(allowedTypes, maxLevel);
+    characters.push(char);
   }
   return new Team(characters);
 }
