@@ -77,6 +77,10 @@ export default class GamePlay {
       const cellEl = this.boardEl.children[position.position];
       const charEl = document.createElement('div');
       charEl.classList.add('character', position.character.value.type);
+      charEl.setAttribute("level", position.character.value.level);
+      charEl.setAttribute("attack", position.character.value.attack);
+      charEl.setAttribute("defence", position.character.value.defence);
+      charEl.setAttribute("health", position.character.value.health);
 
       const healthEl = document.createElement('div');
       healthEl.classList.add('health-level');
@@ -88,6 +92,7 @@ export default class GamePlay {
 
       charEl.appendChild(healthEl);
       cellEl.appendChild(charEl);
+      console.log(charEl);
     }
   }
 
@@ -148,7 +153,7 @@ export default class GamePlay {
   onCellEnter(event) {
     event.preventDefault();
     const index = this.cells.indexOf(event.currentTarget);
-    this.cellEnterListeners.forEach((o) => o.call(null, index));
+    this.cellEnterListeners.forEach((o) => o.call(null, index, event));
   }
 
   onCellLeave(event) {

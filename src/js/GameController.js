@@ -7,7 +7,6 @@ import Deamon from './Characters/Deamon';
 import Undead from './Characters/Undead';
 import { generateTeam } from './generators';
 import PositionedCharacter from './PositionedCharacter';
-import { gameCtrl } from './app'
 
 export default class GameController { 
   constructor(gamePlay, stateService) {
@@ -20,7 +19,8 @@ export default class GameController {
     // TODO: load saved stated from stateService
     this.gamePlay.drawUi(themes.prairie);
     this.rendering();
-    this.gamePlay.addCellEnterListener(index => this.onCellEnter(index));
+    this.gamePlay.addCellEnterListener(index => this.onCellEnter(index, event));
+    this.gamePlay.addCellLeaveListener(index => this.onCellLeave(index, event));
   }
 
   onCellClick(index) {
@@ -28,18 +28,19 @@ export default class GameController {
 
   }
 
-  onCellEnter(index) {
+  onCellEnter(index, event) {
     // TODO: react to mouse enter
-    document.addEventListener('mousemove', e => {
-      if (document.elementFromPoint(e.clientX, e.clientY).classList.contains('character')) {
-        const target = document.elementFromPoint(e.clientX, e.clientY)
-        this.gamePlay.showCellTooltip('info', index)
+      if (event.target.firstChild.classList.contains('character')) {
+        let info = this.showStats(event.target.firstChild)
+        this.gamePlay.showCellTooltip(info, index)
       }
-    })
   }
 
-  onCellLeave(index) {
+  onCellLeave(index, event) {
     // TODO: react to mouse leave
+      if (event.target.firstChild.classList.contains('character')) {
+        this.gamePlay.hideCellTooltip(index)
+      }
   }
 
   rendering(boardSize = 8) {
@@ -60,15 +61,22 @@ export default class GameController {
         }
       }
 
-      team.characters.forEach((element) => {
+      team.characters.forEach(function(element) {
         const positionedCharacter = new PositionedCharacter(element, array[Math.floor(Math.random() * array.length)]);
         array.splice(array.indexOf(positionedCharacter.position), 1);
         positionsArray.push(positionedCharacter);
       });
     }
+
     getPosition(blueTeam, boardSize - boardSize, bluePositions);
     getPosition(redTeam, boardSize - 2, redPositions);
 
     this.gamePlay.redrawPositions(positionsArray);
+  }
+
+  showStats(char) {
+    console.log(`U+1F396 ${char.level} ⚔10 🛡40 ❤50`);
+
+    return char;
   }
 }
