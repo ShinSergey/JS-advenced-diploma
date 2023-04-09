@@ -5,6 +5,8 @@ export default class GamePlay {
     this.boardSize = 8;
     this.container = null;
     this.boardEl = null;
+    this.currentCell = null;
+    this.lastCell = null;
     this.cells = [];
     this.cellClickListeners = [];
     this.cellEnterListeners = [];
@@ -77,10 +79,6 @@ export default class GamePlay {
       const cellEl = this.boardEl.children[position.position];
       const charEl = document.createElement('div');
       charEl.classList.add('character', position.character.value.type);
-      charEl.setAttribute("level", position.character.value.level);
-      charEl.setAttribute("attack", position.character.value.attack);
-      charEl.setAttribute("defence", position.character.value.defence);
-      charEl.setAttribute("health", position.character.value.health);
 
       const healthEl = document.createElement('div');
       healthEl.classList.add('health-level');
@@ -92,7 +90,6 @@ export default class GamePlay {
 
       charEl.appendChild(healthEl);
       cellEl.appendChild(charEl);
-      console.log(charEl);
     }
   }
 
@@ -193,6 +190,12 @@ export default class GamePlay {
   }
 
   selectCell(index, color = 'yellow') {
+    if (this.currentCell) {
+      this.lastCell = this.currentCell
+      this.currentCell.classList.remove('selected', `selected-${color}`)
+    }
+    this.currentCell = this.cells[index];
+
     this.deselectCell(index);
     this.cells[index].classList.add('selected', `selected-${color}`);
   }
